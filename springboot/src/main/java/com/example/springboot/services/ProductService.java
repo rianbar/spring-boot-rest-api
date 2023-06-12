@@ -19,8 +19,8 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Page<ProductModel> getAllProductsService() {
-        Pageable firstPageWithFiveElements = PageRequest.of(0, 5, Sort.by("name"));
+    public Page<ProductModel> getAllProductsService(int page,int size) {
+        Pageable firstPageWithFiveElements = PageRequest.of(page, size, Sort.by("name"));
         return productRepository.findAll(firstPageWithFiveElements);
     }
 

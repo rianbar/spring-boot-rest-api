@@ -33,8 +33,10 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<Page<ProductModel>> getAllProducts() {
-        Page<ProductModel> productsList = productService.getAllProductsService();
+    public ResponseEntity<Page<ProductModel>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Page<ProductModel> productsList = productService.getAllProductsService(page, size);
 
         if (!productsList.isEmpty()) {
             for (ProductModel product : productsList) {
@@ -53,7 +55,8 @@ public class ProductController {
         if (object0.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Object not found!");
         }
-        object0.get().add(linkTo(methodOn(ProductController.class).getAllProducts()).withRel("products list"));
+        object0.get().add(linkTo(methodOn(ProductController.class).getAllProducts(
+                0, 5)).withRel("products list"));
         return ResponseEntity.status(HttpStatus.OK).body(object0.get());
     }
 
