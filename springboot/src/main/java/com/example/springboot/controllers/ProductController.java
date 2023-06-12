@@ -9,12 +9,14 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import static   org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static   org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -31,8 +33,8 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<ProductModel>> getAllProducts() {
-        List<ProductModel> productsList = productService.getAllProductsService();
+    public ResponseEntity<Page<ProductModel>> getAllProducts() {
+        Page<ProductModel> productsList = productService.getAllProductsService();
 
         if (!productsList.isEmpty()) {
             for (ProductModel product : productsList) {
